@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+      branches:
+      - master
+
+jobs:
+  run-tests:
+    runs-on: [ubuntu-latest]
+
+    env:
+        DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+        ref: ${{ github.event.pull_request.head.sha }}
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: "16"
+    - run: yarn install && yarn test --coverage && curl https://deepsource.io/cli | sh && ./bin/deepsource report --analyzer test-coverage --key javascript --value-file ./coverage/cobertura-coverage.xml
