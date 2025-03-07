@@ -1,3 +1,5 @@
+// Test file
+
 const { sum } = require('./index')
 
 test('sum of 2 numbers', () => {
