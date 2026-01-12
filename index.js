@@ -5,7 +5,7 @@ function sum(a, b) {
 function sub(a, b) {
   return a - b
 }
-
+// some comment
 module.exports = {
   sum,
   sub
